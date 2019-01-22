@@ -53,7 +53,8 @@ batch_size = 64
 epochs = 100
 hash_bits = 512
 
-visible = Input(shape=(7,7,512))
+#visible = Input(shape=(7,7,512))
+visible = Input(shape = base_model.output_shape[1:])
 Flatten = Flatten()(visible)
 Dense_1 = Dense(4096)(Flatten)
 Dense_2 = Dense(hash_bits ,activation='sigmoid')(Dense_1)
