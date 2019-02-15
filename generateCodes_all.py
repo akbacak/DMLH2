@@ -17,11 +17,10 @@ model = Model(inputs=model.input, outputs=model.get_layer('dense_2').output)
 X = np.load(open('preprocessed_X.npy'))
 X.shape
 
-XX = model.predict(X, batch_size=64, verbose=0, steps=None) #     TRY THIS ALSO XX = model.predict(X, batch_size)
+X = np.load(open('preprocessed_X.npy'))
+X.shape
 
-features = XX 
+features = model.predict(X, batch_size=64, verbose=0, steps=None) #     TRY THIS ALSO XX = model.predict(X, batch_size)
 features = features > 0.5
 features = features.astype(int)
-np.savetxt('models/dmlh2_64.txt',features, fmt='%d')
-
-
+np.savetxt('text.txt',features, fmt='%d')
