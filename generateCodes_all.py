@@ -20,6 +20,7 @@ X.shape
 XX = model.predict(X, batch_size=64, verbose=0, steps=None) #     TRY THIS ALSO XX = model.predict(X, batch_size)
 
 features = XX 
+features = features > 0.5
 features = features.astype(int)
 np.savetxt('models/dmlh2_64.txt',features, fmt='%d')
 
