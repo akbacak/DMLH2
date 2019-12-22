@@ -17,7 +17,9 @@ web site. It contain image labels.
 Snapshot was taken. Now generate hash codes to ./hashCodes folder by generateCodes_all.py. If you want to get hamming distance
 between two images, use generateCodes.py script.
 
-Note that more explanation will be given after our publication accepted. Feel free for asking question about this work.
+Feel free asking any question.
+
+# All details about this repo will be given after our publication accepted.
 
 
 
