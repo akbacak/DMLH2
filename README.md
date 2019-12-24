@@ -15,9 +15,4 @@ The snapshot was taken. Now generate hash codes to ./hashCodes folder by generat
 
 Feel free asking any question.
 
-# All details about this repo will be given after our publication accepted.
-
-
-
-
-
+# All details about this repo will be given after our publication be published.
