@@ -94,7 +94,9 @@ pred_bool = (pred >0.5)
 
 predictions = pred_bool.astype(int)
 columns=["desert", "mountains", "sea", "sunset", "trees"]
-#columns should be the same order of y_colresults=pd.DataFrame(predictions, columns=columns)
+#columns should be the same order of y_col
+
+results=pd.DataFrame(predictions, columns=columns)
 results["Filenames"]=test_generator.filenames
 ordered_cols=["Filenames"]+columns
 results=results[ordered_cols]#To get the same column order
