@@ -8,7 +8,7 @@ from tensorflow.keras import regularizers, optimizers
 import pandas as pd
 import numpy as np
 import tensorflow as tf
-
+tf.compat.v1.disable_eager_execution()
 
 
 df=pd.read_csv('./miml_dataset/miml_labels_1.csv')
@@ -65,16 +65,30 @@ inputs  = Input(shape=(image_size, image_size, 3))
 enver       = base_model(inputs, training=False)
 Flatten = Flatten()(enver)
 Dense_1 = Dense(2048)(Flatten)
-Dense_2 = Dense(hash_bits ,activation='tanh')(Dense_1)
+Dense_2 = Dense(hash_bits ,activation='sigmoid')(Dense_1)
 Dense_3 = Dense(5, activation='sigmoid')(Dense_2)
 model   = Model(inputs, Dense_3)
 print(model.summary())
 
+
+import keras.backend as K
+def c_loss(noise_1, noise_2):
+    def loss(y_true, y_pred):
+        return ( (tf.keras.losses.binary_crossentropy(y_true, y_pred)) + (K.sum(K.binary_crossentropy(noise_1, noise_2) )) * (1/hash_bits)   )
+
+    return loss
+
+from keras.optimizers import SGD
+model.compile(loss = c_loss(noise_1 = tf.dtypes.cast((Dense_2 > 0.5 ), tf.float32), noise_2 = Dense_2 ),  optimizer=tf.keras.optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True), metrics=['accuracy'])
+
+
+
+
+'''
 from tensorflow.keras.optimizers import SGD
 sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(optimizer = sgd, loss="binary_crossentropy")
-
-
+'''
 
 
 '''
@@ -94,9 +108,6 @@ sgd =optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss = loss_1,  optimizer=sgd, metrics=['accuracy'])
 '''
 
-
-
-
 STEP_SIZE_TRAIN=train_generator.n//train_generator.batch_size
 STEP_SIZE_VALID=valid_generator.n//valid_generator.batch_size
 STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
@@ -104,7 +115,7 @@ model.fit_generator(generator=train_generator,
                     steps_per_epoch=STEP_SIZE_TRAIN,
                     validation_data=valid_generator,
                     validation_steps=STEP_SIZE_VALID,
-                    epochs=9
+                    epochs=16
 )
 
 
