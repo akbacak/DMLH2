@@ -1,6 +1,6 @@
 from tensorflow.keras.models import Sequential,Model
 from tensorflow.keras.layers import Input
-from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications import InceptionV3
 from keras_preprocessing.image import ImageDataGenerator
 from tensorflow.keras.layers import Dense, Activation, Flatten, Dropout, BatchNormalization
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
@@ -9,16 +9,12 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
-
+# https://datascience.stackexchange.com/questions/64433/symbolicexception-inputs-to-eager-execution-function-cannot-be-keras-symbolic-t
 
 df=pd.read_csv('./miml_dataset/miml_labels_1.csv')
-
 columns=["desert", "mountains", "sea", "sunset", "trees"]
-
 datagen=ImageDataGenerator(rescale=1./255.)
-
 test_datagen=ImageDataGenerator(rescale=1./255.)
-
 image_size = 224
 
 train_generator=datagen.flow_from_dataframe(
@@ -59,7 +55,7 @@ target_size=(image_size,image_size))
 
 hash_bits = 32
 
-base_model = VGG16(weights='imagenet', include_top=False, input_shape=(image_size, image_size, 3))
+base_model = InceptionV3(weights='imagenet', include_top=False, input_shape=(image_size, image_size, 3))
 base_model.trainable =False
 inputs  = Input(shape=(image_size, image_size, 3))
 enver       = base_model(inputs, training=False)
