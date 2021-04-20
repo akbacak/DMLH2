@@ -8,7 +8,7 @@ The first step is extract image features from VGG16 and locate all features into
 Train the network and take a snapshot into ./model folder after training by dmlh2.py. targets.mat is a Matlab file which is available at LAMDA web site. It holds image labels.  
 
 # 3 
-If snapshot of the trained network was taken, then generate hash codes to ./hashCodes folder by generateCodes_all.py. If you want to get Hamming distance between two images, use generateCodes.py script.
+If snapshot of the trained network was taken, then generate hash codes to ./hashCodes folder by generateCodes_all.py. If you want to get Hamming distance between two images, use generateCodes.py script. generateCodes_all.py on the other hand, generates hash codes for the whole dataset images.
 
 Feel free asking any question.
 
